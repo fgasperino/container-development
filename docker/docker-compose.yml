@@ -1,0 +1,40 @@
+version: '3.6'
+
+volumes:
+  clojure_dev_1:
+    driver: local
+
+networks:
+  clojure_dev_1:
+    driver: bridge
+
+services:
+  clojure_dev_1:
+    container_name: clojure-dev-1
+    image: clojure-dev:0.0
+    environment:
+      - TERM=xterm-256color
+      - LANG=c.UTF-8
+    ports:
+      # If exposing an nREPL port from container -> host.
+      - 0.0.0.0:${REPL_PORT:-9876}:${REPL_PORT:-9876}
+    volumes:
+      - clojure_dev_1:/root
+
+      # If using git from within container.
+      - $HOME/.gitconfig:/root/.gitconfig:ro
+      - $HOME/.gnupg:/root/.gnupg:ro
+      - $HOME/.ssh:$HOME/.ssh:ro
+
+      # If using tmux in the container.
+      - $HOME/.tmux.conf:/root/.tmux.conf:ro
+      - $HOME/.tmux:/root/.tmux:ro
+
+      # If using neovim in the container.
+      - $HOME/.config/nvim:/root/.config/nvim:ro
+      # - $HOME/.cache/nvim:/root/.cache/nvim:ro
+
+      # Map the local project repo into the container.
+      - $PROJECT_HOME:/root/project
+    networks:
+      - clojure_dev_1
