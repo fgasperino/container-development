@@ -10,6 +10,10 @@ The Dockerfile contains a minimal set of parameters required to begin
 containerized development.
 
 ## Build
+
+Manual build process for building the image independent from docker compose.
+If you are not concerned, skip to the 'Run' section.
+
 ```
   docker \
     build \
@@ -26,7 +30,7 @@ Start the configured containers:
 ```
   env \
     PROJECT_HOME=/path/to/project \
-  docker-compose up -d
+  docker compose up -d
 ```
 
 In a new terminal, connect to the running container. This will allow
@@ -34,7 +38,7 @@ you to confirm the volume mapping is successful as well as starting the
 Clojure REPL process.
 
 ```
-  docker exec -it clojure-dev-1 /bin/bash
+  docker exec -it clojure-dev /bin/bash
 ```
 
 Start the Clojure REPL process:
@@ -45,7 +49,7 @@ Start the Clojure REPL process:
 
 ## Neovim (local)
 
-  ```neovim```
+  ```nvim```
 
   It may install neovim plugins and lsp clients/servers first run.
 
@@ -58,7 +62,7 @@ Start the Clojure REPL process:
   services:
     clojure_dev:
       ports:
-        - 0.0.0.0:${REPL_PORT}:${REPL_PORT}
+        - 0.0.0.0:12345:12345
   ```
 
   If using clojure deps (deps.edn) tooling, add an alias in your ~/.clojure/deps.edn
@@ -70,7 +74,15 @@ Start the Clojure REPL process:
     {:extra-deps {nrepl/nrepl {:mvn/version "1.0.0"}
                   cider/cider-nrepl {:mvn/version "0.48.1"}}
      :main-opts ["-m" "nrepl.cmdline"
+                 "-b" "0.0.0.0"
+                 "-p" "12345"
                  "--middleware" "[cider.nrepl/cider-middleware]"]}}}
+  ```
+
+  Start the container.
+
+  ```
+  PROJECT_HOME=/path/to/project docker compose up
   ```
 
   Run the clojure repl with the alias:
@@ -79,4 +91,5 @@ Start the Clojure REPL process:
   clj -M:nrepl
   ```
 
-  
+  Connect your editor to 127.0.0.1:12345.
+
