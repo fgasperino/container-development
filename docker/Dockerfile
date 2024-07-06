@@ -7,13 +7,14 @@ ARG UID=
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME=$HOME
 ENV PATH=$PATH:$HOME:$HOME/bin
+ENV GPG_TTY=$(tty)
 
 RUN apt-get clean
 RUN apt-get update
 RUN apt-get install -y bash sudo locales wget busybox
 
 # Environment customization.
-RUN apt-get install -y tmux gcc unzip git ripgrep
+RUN apt-get install -y tmux gcc unzip git ripgrep gpg pinentry-curses
 RUN apt-get autoclean
 
 # Add USER to image w/ sudo privs.
@@ -35,7 +36,7 @@ RUN wget https://github.com/clojure-lsp/clojure-lsp/releases/download/2024.04.22
 #
 
 # NeoVIM AppImage.
-RUN wget https://github.com/neovim/neovim/releases/download/v0.9.5/nvim.appimage && \
+RUN wget https://github.com/neovim/neovim/releases/download/v0.10.0/nvim.appimage && \
     chmod 755 nvim.appimage && \
     ./nvim.appimage --appimage-extract && \
     cp -a squashfs-root/usr /
