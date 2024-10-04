@@ -1,4 +1,4 @@
-FROM clojure:temurin-21-bookworm
+FROM clojure:temurin-22-bookworm
 
 ARG USER=
 ARG HOME=
