@@ -43,7 +43,6 @@ services:
 
       # If using neovim in the container.
       - $HOME/.config/nvim:$HOME/.config/nvim
-      - $HOME/.cache/nvim:$HOME/.cache/nvim
 
       # Map the local project repo into the container.
       - $PROJECT_HOME:$HOME/project
