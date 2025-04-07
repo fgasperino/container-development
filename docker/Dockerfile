@@ -1,4 +1,4 @@
-FROM clojure:temurin-23-bookworm
+FROM clojure:temurin-24-bookworm
 
 ARG USER=
 ARG HOME=
@@ -30,9 +30,9 @@ RUN mkdir -p $HOME/.config $HOME/.cache $HOME/.clojure $HOME/.lein
 #
 
 # NeoVIM AppImage.
-RUN wget https://github.com/neovim/neovim/releases/download/v0.10.3/nvim.appimage && \
-    chmod 755 nvim.appimage && \
-    ./nvim.appimage --appimage-extract && \
+RUN wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.appimage && \
+    chmod 755 nvim-linux-x86_64.appimage && \
+    ./nvim-linux-x86_64.appimage --appimage-extract && \
     cp -a squashfs-root/usr /
 
 # Change ownership of $HOME to $USER.
