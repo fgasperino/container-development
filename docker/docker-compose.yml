@@ -49,5 +49,10 @@ services:
 
       # Allow for docker control.
       - /var/run/docker.sock:/var/run/docker.sock:rw
+
+    ports:
+      # When using a nrepl that listens on 0.0.0.0:5678, map to host.
+      - 127.0.0.1:5678:5678
+
     networks:
       - clojure_dev

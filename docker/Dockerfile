@@ -30,7 +30,7 @@ RUN mkdir -p $HOME/.config $HOME/.cache $HOME/.clojure $HOME/.lein
 #
 
 # NeoVIM AppImage.
-RUN wget https://github.com/neovim/neovim/releases/download/v0.11.0/nvim-linux-x86_64.appimage && \
+RUN wget https://github.com/neovim/neovim/releases/download/v0.11.3/nvim-linux-x86_64.appimage && \
     chmod 755 nvim-linux-x86_64.appimage && \
     ./nvim-linux-x86_64.appimage --appimage-extract && \
     cp -a squashfs-root/usr /
